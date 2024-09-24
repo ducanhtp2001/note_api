@@ -30,6 +30,8 @@ class SinhVien {
 $jsonData = file_get_contents('php://input');
 $data = json_decode($jsonData, true);
 
+header('Content-Type: application/json; charset=utf-8');
+
 if ($data) {
     $maMon = $data['maMon'];
     $lopTinChi = $data['lopTinChi'];

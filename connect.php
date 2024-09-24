@@ -5,6 +5,7 @@
 	$dbname = 'note_db';
 // Create connection
 $conn = new mysqli($server, $user, $mk, $dbname);
+$conn->set_charset("utf8mb4");
 
 // Check connection
 

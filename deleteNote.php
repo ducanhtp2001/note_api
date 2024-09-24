@@ -11,15 +11,30 @@ if ($data) {
     $id = $data['id'];
 
     if ($idSinhVien != null && $id != null) {
-        $sql = "DELETE FROM note WHERE id = '$id' AND idsinhvien = '$idSinhVien'";
-        $result = $conn->query($sql);
+        // Kiểm tra xem bản ghi có tồn tại không
+        $checkSql = "SELECT * FROM note WHERE id = '$id' AND idsinhvien = '$idSinhVien'";
+        $checkResult = $conn->query($checkSql);
 
-        if ($result) {
-            $json->status = true;
-            $json->message = "Success";
+        if ($checkResult && $checkResult->num_rows > 0) {
+            // Nếu bản ghi tồn tại, thực hiện xóa
+            $sql = "DELETE FROM note WHERE id = '$id' AND idsinhvien = '$idSinhVien'";
+            $result = $conn->query($sql);
+
+            if ($result) {
+                if ($conn->affected_rows > 0) {
+                    $json->status = true;
+                    $json->message = "Success";
+                } else {
+                    $json->status = false;
+                    $json->message = "No record found to delete";
+                }
+            } else {
+                $json->status = false;
+                $json->message = "SQL Error: " . $conn->error;
+            }
         } else {
             $json->status = false;
-            $json->message = "False";
+            $json->message = "No record found to delete";
         }
     } else {
         $json->status = false;
@@ -32,4 +47,6 @@ if ($data) {
 
 $myJson = json_encode($json);
 echo $myJson;
+
+$conn->close();
 ?>
