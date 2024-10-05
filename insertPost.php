@@ -1,21 +1,39 @@
 <?php
 include 'connect.php';
-include 'ultil.php';
 
+class Post {
+    public $id;
+    public $idSinhVien;
+    public $thoiGian;
+    public $maMon;
+    public $lopTinChi;
+    public $noiDung;
+    public $coImg;
+    public $img;
+
+    function __construct($id, $idSinhVien, $thoiGian, $maMon, $lopTinChi, $noiDung, $coImg, $img) {
+        $this->id = $id;
+        $this->idSinhVien = $idSinhVien;
+        $this->thoiGian = $thoiGian;
+        $this->maMon = $maMon;
+        $this->lopTinChi = $lopTinChi;
+        $this->noiDung = $noiDung;
+        $this->coImg = $coImg;
+        $this->img = $img;
+    }
+}
 
 // Lấy dữ liệu từ yêu cầu POST dưới dạng JSON
 $data = json_decode(file_get_contents('php://input'), true);
 
 $idSinhVien = isset($data['idSinhVien']) ? $data['idSinhVien'] : null;
 $id = isset($data['id']) ? $data['id'] : null;
-$tieuDe = isset($data['tieuDe']) ? $data['tieuDe'] : null;
-$ngayTao = isset($data['ngayTao']) ? $data['ngayTao'] : null;
-$ngayCapNhat = isset($data['ngayCapNhat']) ? $data['ngayCapNhat'] : null;
+$thoiGian = isset($data['thoiGian']) ? $data['thoiGian'] : null;
+$maMon = isset($data['maMon']) ? $data['maMon'] : null;
+$lopTinChi = isset($data['lopTinChi']) ? $data['lopTinChi'] : null;
 $noiDung = isset($data['noiDung']) ? $data['noiDung'] : null;
-$noiDungCua = isset($data['noiDungCua']) ? $data['noiDungCua'] : null;
-
-if($noiDungCua == null) $noiDungCua = "Của tôi";
-
+$coImg = isset($data['coImg']) ? $data['coImg'] : null;
+$img = isset($data['img']) ? $data['img'] : null;
 
 $fields = [];
 $values = [];
@@ -27,34 +45,36 @@ if ($id !== null) {
 
 $fields[] = 'idsinhvien';
 $values[] = "'$idSinhVien'";
-$fields[] = 'tieude';
-$values[] = "'$tieuDe'";
-$fields[] = 'ngayTao';
-$values[] = "'$ngayTao'";
-$fields[] = 'ngayCapNhat';
-$values[] = "'$ngayCapNhat'";
+$fields[] = 'thoigian';
+$values[] = "'$thoiGian'";
+$fields[] = 'mamon';
+$values[] = "'$maMon'";
+$fields[] = 'loptinchi';
+$values[] = "'$lopTinChi'";
 $fields[] = 'noidung';
 $values[] = "'$noiDung'";
-$fields[] = 'noiDungCua';
-$values[] = "'$noiDungCua'";
+$fields[] = 'coimg';
+$values[] = "'$coImg'";
+$fields[] = 'img';
+$values[] = "'$img'";
 
 // Tạo câu lệnh SQL
-$sql = "INSERT INTO note (" . implode(", ", $fields) . ")
+$sql = "INSERT INTO post (" . implode(", ", $fields) . ")
         VALUES (" . implode(", ", $values) . ")
         ON DUPLICATE KEY UPDATE 
             idsinhvien = '$idSinhVien', 
-            tieude = '$tieuDe', 
-            ngayTao = '$ngayTao', 
-            ngayCapNhat = '$ngayCapNhat', 
+            thoigian = '$thoiGian', 
+            mamon = '$maMon', 
+            loptinchi = '$lopTinChi', 
             noidung = '$noiDung', 
-            noiDungCua = '$noiDungCua'";
+            coimg = '$coImg', 
+            img = '$img'";
 
 // echo $sql;
 
 if ($conn->query($sql) === TRUE) {
     if ($conn->affected_rows > 0) {
         if ($conn->affected_rows == 1) {
-
             $response = array(
                 'status' => true,
                 'message' => 'Thêm mới thành công'

@@ -1,31 +1,6 @@
 <?php
 include 'connect.php';
-
-class SinhVien {
-    public $id;
-    public $hoTen;
-    public $ngaySinh;
-    public $gioiTinh;
-    public $queQuan;
-    public $gmail;
-    public $sdt;
-    public $khoa;
-    public $nienKhoa;
-    public $lop;
-
-    function __construct($id, $hoTen, $ngaySinh, $gioiTinh, $queQuan, $gmail, $sdt, $khoa, $nienKhoa, $lop) {
-        $this->id = $id;
-        $this->hoTen = $hoTen;
-        $this->ngaySinh = $ngaySinh;
-        $this->gioiTinh = $gioiTinh;
-        $this->queQuan = $queQuan;
-        $this->gmail = $gmail;
-        $this->sdt = $sdt;
-        $this->khoa = $khoa;
-        $this->nienKhoa = $nienKhoa;
-        $this->lop = $lop;
-    }
-}
+include 'model.php';
 
 $jsonData = file_get_contents('php://input');
 $data = json_decode($jsonData, true);
