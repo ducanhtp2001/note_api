@@ -1,23 +1,6 @@
 <?php
 include 'connect.php';
-
-class Note {
-    public $id;
-    public $tieuDe;
-    public $ngayTao;
-    public $ngayCapNhat;
-    public $noiDung;
-    public $noiDungCua;
-
-    function __construct($id, $tieuDe, $ngayTao, $ngayCapNhat, $noiDung, $noiDungCua) {
-        $this->id = $id;
-        $this->tieuDe = $tieuDe;
-        $this->ngayTao = $ngayTao;
-        $this->ngayCapNhat = $ngayCapNhat;
-        $this->noiDung = $noiDung;
-        $this->noiDungCua = $noiDungCua;
-    }
-}
+include 'model.php';
 
 $noteArr = array();
 
@@ -38,6 +21,7 @@ if ($data) {
             while ($row = $result->fetch_assoc()) {
                 $note = new Note(
                     (int)$row['id'],
+                    $row['idsinhvien'],
                     $row['tieude'],
                     $row['ngayTao'],
                     $row['ngayCapNhat'],

@@ -2,8 +2,6 @@
 include 'connect.php';
 include 'ultil.php';
 
-
-// Lấy dữ liệu từ yêu cầu POST dưới dạng JSON
 $data = json_decode(file_get_contents('php://input'), true);
 
 $idSinhVien = isset($data['idSinhVien']) ? $data['idSinhVien'] : null;
@@ -12,10 +10,7 @@ $tieuDe = isset($data['tieuDe']) ? $data['tieuDe'] : null;
 $ngayTao = isset($data['ngayTao']) ? $data['ngayTao'] : null;
 $ngayCapNhat = isset($data['ngayCapNhat']) ? $data['ngayCapNhat'] : null;
 $noiDung = isset($data['noiDung']) ? $data['noiDung'] : null;
-$noiDungCua = isset($data['noiDungCua']) ? $data['noiDungCua'] : null;
-
-if($noiDungCua == null) $noiDungCua = "Của tôi";
-
+$noiDungCua = isset($data['noiDungCua']) ? $data['noiDungCua'] : "Của tôi"; // Nếu không có, gán mặc định
 
 $fields = [];
 $values = [];
@@ -38,7 +33,6 @@ $values[] = "'$noiDung'";
 $fields[] = 'noiDungCua';
 $values[] = "'$noiDungCua'";
 
-// Tạo câu lệnh SQL
 $sql = "INSERT INTO note (" . implode(", ", $fields) . ")
         VALUES (" . implode(", ", $values) . ")
         ON DUPLICATE KEY UPDATE 
@@ -49,31 +43,23 @@ $sql = "INSERT INTO note (" . implode(", ", $fields) . ")
             noidung = '$noiDung', 
             noiDungCua = '$noiDungCua'";
 
+// Echo câu lệnh SQL để kiểm tra
 // echo $sql;
 
 if ($conn->query($sql) === TRUE) {
     if ($conn->affected_rows > 0) {
-        if ($conn->affected_rows == 1) {
-
-            $response = array(
-                'status' => true,
-                'message' => 'Thêm mới thành công'
-            );
-        } else {
-            $response = array(
-                'status' => true,
-                'message' => 'Đã cập nhật'
-            );
-        }
+        $response = array(
+            'status' => true,
+            'message' => $conn->affected_rows == 1 ? 'Thêm mới thành công' : 'Đã cập nhật'
+        );
     } else {
-        echo "Lỗi: " . $conn->error;
         $response = array(
             'status' => false,
-            'message' => 'Lỗi cập nhật'
+            'message' => 'Không có thay đổi nào'
         );
     }
 } else {
-    echo "Lỗi: " . $conn->error;
+    echo "Lỗi: " . mysqli_error($conn); // Thông báo lỗi cụ thể
     $response = array(
         'status' => false,
         'message' => 'Thêm mới thất bại'
@@ -81,6 +67,5 @@ if ($conn->query($sql) === TRUE) {
 }
 
 echo json_encode($response);
-
 $conn->close();
 ?>

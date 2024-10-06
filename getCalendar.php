@@ -1,25 +1,7 @@
 <?php
 include 'connect.php';
+include 'model.php';
 
-class Schedule {
-    public $maMon;
-    public $tenMon;
-    public $soTinChi;
-    public $lopTinChi;
-    public $ngayHoc;
-    public $caHoc;
-    public $phongHoc;
-
-    function __construct($maMon, $tenMon, $soTinChi, $lopTinChi, $ngayHoc, $caHoc, $phongHoc) {
-        $this->maMon = $maMon;
-        $this->tenMon = $tenMon;
-        $this->soTinChi = $soTinChi;
-        $this->lopTinChi = $lopTinChi;
-        $this->ngayHoc = $ngayHoc;
-        $this->caHoc = $caHoc;
-        $this->phongHoc = $phongHoc;
-    }
-}
 
 $scheduleArr = array();
 

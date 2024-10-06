@@ -65,3 +65,45 @@ class Message {
         $this->img = $img;
     }
 }
+
+class Schedule {
+    public $maMon;
+    public $tenMon;
+    public $soTinChi;
+    public $lopTinChi;
+    public $ngayHoc;
+    public $caHoc;
+    public $phongHoc;
+
+    function __construct($maMon, $tenMon, $soTinChi, $lopTinChi, $ngayHoc, $caHoc, $phongHoc) {
+        $this->maMon = $maMon;
+        $this->tenMon = $tenMon;
+        $this->soTinChi = $soTinChi;
+        $this->lopTinChi = $lopTinChi;
+        $this->ngayHoc = $ngayHoc;
+        $this->caHoc = $caHoc;
+        $this->phongHoc = $phongHoc;
+    }
+}
+
+class Post {
+    public $id;
+    public $idSinhVien;
+    public $thoiGian;
+    public $maMon;
+    public $lopTinChi;
+    public $noiDung;
+    public $coImg;
+    public $img;
+
+    function __construct($id, $idSinhVien, $thoiGian, $maMon, $lopTinChi, $noiDung, $coImg, $img) {
+        $this->id = $id;
+        $this->idSinhVien = $idSinhVien;
+        $this->thoiGian = $thoiGian;
+        $this->maMon = $maMon;
+        $this->lopTinChi = $lopTinChi;
+        $this->noiDung = $noiDung;
+        $this->coImg = $coImg;
+        $this->img = $img;
+    }
+}

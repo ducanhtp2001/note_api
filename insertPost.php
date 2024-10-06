@@ -1,27 +1,6 @@
 <?php
 include 'connect.php';
-
-class Post {
-    public $id;
-    public $idSinhVien;
-    public $thoiGian;
-    public $maMon;
-    public $lopTinChi;
-    public $noiDung;
-    public $coImg;
-    public $img;
-
-    function __construct($id, $idSinhVien, $thoiGian, $maMon, $lopTinChi, $noiDung, $coImg, $img) {
-        $this->id = $id;
-        $this->idSinhVien = $idSinhVien;
-        $this->thoiGian = $thoiGian;
-        $this->maMon = $maMon;
-        $this->lopTinChi = $lopTinChi;
-        $this->noiDung = $noiDung;
-        $this->coImg = $coImg;
-        $this->img = $img;
-    }
-}
+include 'model.php';
 
 // Lấy dữ liệu từ yêu cầu POST dưới dạng JSON
 $data = json_decode(file_get_contents('php://input'), true);
